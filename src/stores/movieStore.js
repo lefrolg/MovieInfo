@@ -5,24 +5,32 @@ import {getMovieById, getSimilarMovies} from "@/services/movies.js";
 export const useMovieStore = defineStore('movie', () => {
     const movie = ref({});
     const similarMovies = ref([]);
+    const isLoading = ref(false);
 
     async function setMovieData(id) {
         try {
+            isLoading.value = true;
             const movieData = await getMovieById(id);
             movie.value = movieData.data;
+            isLoading.value = false;
         } catch (e) {
             console.error(e)
+            isLoading.value = false;
         }
     }
 
     async function setSimilarMovies(id) {
-        console.log('setSimilarMovies', id)
         try {
             const similarMoviesData = await getSimilarMovies(id, 1)
             similarMovies.value = similarMoviesData.data.results
         } catch (e) {
             console.error(e)
         }
+    }
+
+    function emptyMovie(){
+        movie.value = {};
+        similarMovies.value = []
     }
 
     const movieYear = computed(() => {
@@ -39,5 +47,5 @@ export const useMovieStore = defineStore('movie', () => {
         return movie.value?.production_countries ? movie.value.production_countries.map(g => g.name).join(', ') : '';
     })
 
-    return {movie, similarMovies, setMovieData, setSimilarMovies, movieYear, genres, countries}
+    return {movie, similarMovies, setMovieData, setSimilarMovies, emptyMovie, movieYear, genres, countries, isLoading}
 })

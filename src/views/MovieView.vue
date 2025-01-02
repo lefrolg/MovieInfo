@@ -8,11 +8,12 @@ import MovieCard from "@/components/MovieCard.vue";
 
 const route = useRoute();
 const store = useMovieStore();
-const {movie, similarMovies, movieYear, genres, countries} = storeToRefs(store);
+const {movie, similarMovies, movieYear, genres, countries, isLoading} = storeToRefs(store);
 
 const movieId = computed(() => route.params.id)
 
 watch(movieId, async () => {
+  store.emptyMovie()
   return await setMovieData()
 })
 
@@ -34,7 +35,6 @@ const imagePath = import.meta.env.VITE_TMDB_IMAGE_URL_BIG;
 
 <template>
   <v-sheet
-      v-if="movie?.id == movieId"
       border="none"
       class="text-body-2 mx-auto"
       max-width="1200"
@@ -59,10 +59,14 @@ const imagePath = import.meta.env.VITE_TMDB_IMAGE_URL_BIG;
           </v-img>
         </v-col>
 
-        <v-col cols="12" md="9">
-          <h1 v-if="movie.id"> {{ movie.title }} ({{ movieYear }}) </h1>
+        <v-col cols="12" md="9" v-if="!isLoading">
+          <h1 v-if="movie.id"> {{ movie.title }}
+            <template v-if="movieYear">
+              ({{ movieYear }})
+            </template>
+          </h1>
           <p class="mb-2"><i>{{ movie.tagline }}</i></p>
-          <div class="d-flex align-center ga-2 mb-4">
+          <div class="d-flex align-center ga-2 mb-4" v-if="movie.vote_average">
             <v-rating
                 :length="10"
                 :model-value="movie.vote_average"
@@ -81,7 +85,7 @@ const imagePath = import.meta.env.VITE_TMDB_IMAGE_URL_BIG;
           <div v-if="countries" class="mb-4">
             <span class="pr-2 font-weight-bold">Countries:</span> {{ countries }}
           </div>
-          <div>{{ movie.overview }}</div>
+          <div v-if="movie.overview">{{ movie.overview }}</div>
         </v-col>
       </v-row>
     </v-container>

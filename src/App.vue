@@ -7,13 +7,16 @@ import { RouterLink, RouterView } from 'vue-router'
       <v-app-bar title="App bar"></v-app-bar>
 
       <v-main>
-        <v-container>
+        <v-container class="container-app">
           <router-view />
-
         </v-container>
       </v-main>
     </v-app>
 </template>
 
 <style scoped>
+
+.container-app {
+  max-width: 1200px;
+}
 </style>

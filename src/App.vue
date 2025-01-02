@@ -4,7 +4,11 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
     <v-app theme="light" class="w-100">
-      <v-app-bar title="App bar"></v-app-bar>
+      <v-app-bar>
+         <router-link class="logo" :to="{name: 'home'}">
+           Movie Info
+         </router-link>
+      </v-app-bar>
 
       <v-main>
         <v-container class="container-app">
@@ -18,5 +22,12 @@ import { RouterLink, RouterView } from 'vue-router'
 
 .container-app {
   max-width: 1200px;
+}
+
+.logo {
+  text-decoration: none;
+  padding: 0 15px;
+  font-size: 24px;
+  color: #000;
 }
 </style>

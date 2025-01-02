@@ -19,11 +19,12 @@ const vuetify = createVuetify({
   components,
   directives,
   icons: {
-    iconfont: 'mdi', // Ensure this line is set to 'mdi'
+    iconfont: 'mdi',
   },
 })
 
-app.use(createPinia())
+const pinia = createPinia()
+app.use(pinia)
 app.use(router)
 app.use(vuetify)
 

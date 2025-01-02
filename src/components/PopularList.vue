@@ -2,7 +2,7 @@
 
 import {computed, onMounted, ref, useTemplateRef} from "vue";
 import {getPopularMovies} from "@/services/movies.js";
-import MovieCard from "@/components/movieCard.vue";
+import MovieCard from "@/components/MovieCard.vue";
 
 const popularMoviesSet = ref(new Set());
 const currentPage = ref(1);

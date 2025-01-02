@@ -25,6 +25,8 @@ const props = defineProps({
   }
 })
 
+const imagePath = import.meta.env.VITE_TMDB_IMAGE_URL;
+
 const date = computed(() => {
   const date = new Date(props.releaseDate);
   return date.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
@@ -39,7 +41,7 @@ const date = computed(() => {
   >
     <router-link :to="{name: 'movie', params: {id}}">
       <v-img
-        :src="'https://media.themoviedb.org/t/p/w220_and_h330_face/' + posterUrl"
+        :src="imagePath + posterUrl"
         class="align-end text-white"
         cover
         height="400"

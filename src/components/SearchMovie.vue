@@ -57,6 +57,7 @@ const searchItems = computed(() => {
           :value="item"
           border="black"
           color="primary"
+          @click="search = ''"
       >
         <v-list-item-title class="ml-2" v-text="item.title"></v-list-item-title>
       </v-list-item>
@@ -67,7 +68,7 @@ const searchItems = computed(() => {
 
 <style scoped>
 
-:deep(.v-input__details){
+:deep(.v-input__details) {
   display: none;
 }
 

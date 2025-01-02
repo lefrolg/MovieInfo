@@ -1,16 +1,13 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import TheHeader from "@/components/TheHeader.vue";
 </script>
 
 <template>
     <v-app theme="light" class="w-100">
-      <v-app-bar>
-         <router-link class="logo" :to="{name: 'home'}">
-           Movie Info
-         </router-link>
-      </v-app-bar>
+      <the-header/>
 
-      <v-main>
+      <v-main class="pt-16">
         <v-container class="container-app">
           <router-view />
         </v-container>
@@ -19,15 +16,4 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
-
-.container-app {
-  max-width: 1200px;
-}
-
-.logo {
-  text-decoration: none;
-  padding: 0 15px;
-  font-size: 24px;
-  color: #000;
-}
 </style>

@@ -1,13 +1,28 @@
 import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
-import {getMovieById} from "@/services/movies.js";
+import {getMovieById, getSimilarMovies} from "@/services/movies.js";
 
 export const useMovieStore = defineStore('movie', () => {
     const movie = ref({});
+    const similarMovies = ref([]);
 
     async function setMovieData(id) {
-        const movieData = await getMovieById(id);
-        movie.value = movieData.data;
+        try {
+            const movieData = await getMovieById(id);
+            movie.value = movieData.data;
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    async function setSimilarMovies(id) {
+        console.log('setSimilarMovies', id)
+        try {
+            const similarMoviesData = await getSimilarMovies(id, 1)
+            similarMovies.value = similarMoviesData.data.results
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     const movieYear = computed(() => {
@@ -20,5 +35,9 @@ export const useMovieStore = defineStore('movie', () => {
         return movie.value?.genres ? movie.value.genres.map(g => g.name).join(', ') : '';
     })
 
-    return {movie, setMovieData, movieYear, genres}
+    const countries = computed(() => {
+        return movie.value?.production_countries ? movie.value.production_countries.map(g => g.name).join(', ') : '';
+    })
+
+    return {movie, similarMovies, setMovieData, setSimilarMovies, movieYear, genres, countries}
 })

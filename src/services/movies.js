@@ -17,3 +17,14 @@ export function getPopularMovies(page) {
 export function getMovieById(id) {
   return apiClient.get(`/movie/${id}?language=en-US`)
 }
+
+/**
+ * Get the similar movies by movie id
+ * @param id
+ * @param page
+ * @returns {Promise<axios.AxiosResponse<any>>}
+ */
+export function getSimilarMovies(id, page) {
+  return apiClient.get(`/movie/${id}/similar?language=en-US&page=${page}`)
+}
+

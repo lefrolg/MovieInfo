@@ -36,8 +36,10 @@ const date = computed(() => {
 <template>
   <v-card
     class="mx-auto"
+    rounded="large"
     color="blue-grey-lighten-5"
     height="100%"
+    elevation="6"
   >
     <router-link :to="{name: 'movie', params: {id}}">
       <v-img
@@ -64,7 +66,6 @@ const date = computed(() => {
           :length="10"
           :model-value="rating"
           active-color="orange"
-          hover
           readonly
           size="small"
         />

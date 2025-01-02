@@ -9,8 +9,8 @@ import SearchMovie from "@/components/SearchMovie.vue";
     <v-container class="container-app py-2">
       <div class="d-flex flex-row flex-nowrap">
         <router-link class="logo" :to="{name: 'home'}">
+          <v-icon icon="mdi-movie"></v-icon>
           Movie Info
-
         </router-link>
         <search-movie/>
       </div>
@@ -27,7 +27,7 @@ import SearchMovie from "@/components/SearchMovie.vue";
 .logo {
   text-decoration: none;
   width: 250px;
-  padding: 0 15px;
+  padding-right: 15px;
   font-size: 24px;
   color: #000;
 }

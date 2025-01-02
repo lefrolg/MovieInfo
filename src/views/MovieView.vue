@@ -1,6 +1,6 @@
 <script setup>
 
-import {computed, onMounted} from "vue";
+import {computed, onMounted, watch} from "vue";
 import {useRoute} from "vue-router";
 import {useMovieStore} from "@/stores/movieStore.js";
 import {storeToRefs} from "pinia";
@@ -11,12 +11,21 @@ const store = useMovieStore();
 const {movie, similarMovies, movieYear, genres, countries} = storeToRefs(store);
 
 const movieId = computed(() => route.params.id)
+
+watch(movieId, async () => {
+  return await setMovieData()
+})
+
 onMounted(async () => {
-  await Promise.all([
+  return await setMovieData()
+})
+
+async function setMovieData() {
+  return await Promise.all([
     store.setMovieData(movieId.value),
     store.setSimilarMovies(movieId.value)
   ])
-})
+}
 
 const imagePath = import.meta.env.VITE_TMDB_IMAGE_URL_BIG;
 
@@ -63,7 +72,7 @@ const imagePath = import.meta.env.VITE_TMDB_IMAGE_URL_BIG;
                 size="small"
             />
             <div class="rating-number">
-              {{ movie.vote_average }} ({{movie.vote_count}})
+              {{ movie.vote_average }} ({{ movie.vote_count }})
             </div>
           </div>
           <div v-if="genres" class="mb-2">

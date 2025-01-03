@@ -16,7 +16,7 @@ const router = createRouter({
       component: MovieView,
     },
   ],
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     // always scroll to top
     return { top: 0 }
   },

@@ -71,14 +71,12 @@ function manageSearchResultsVisibility(event) {
       <v-list-item
         v-for="(item, i) in searchItems"
         :key="i"
-        :border="1"
         :to="item.route"
         :value="item"
-        border="black"
         color="primary"
         @click="search = ''"
       >
-        <v-list-item-title class="ml-2" v-text="item.title"></v-list-item-title>
+        <v-list-item-title class="ml-2" >{{item.title}}</v-list-item-title>
       </v-list-item>
     </v-list>
   </div>

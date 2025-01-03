@@ -2,62 +2,81 @@
 
 import {useSearchMoviesStore} from "@/stores/searchMovies.js";
 import {storeToRefs} from "pinia";
-import {computed, watch} from "vue";
+import {computed, onMounted, onUnmounted, ref, useTemplateRef, watch} from "vue";
 
 const store = useSearchMoviesStore();
 const {isLoading, searchResults} = storeToRefs(store)
 const search = defineModel();
 
-watch(search, () => {
-  store.fetchSearchMovies(search.value)
+watch(search, async () => {
+  showSearchResults.value = true;
+  await store.fetchSearchMovies(search.value)
 })
 
 const searchItems = computed(() => {
-      if (!search.value) return [];
-      const searchItems = searchResults.value.map(movie => {
-        const year = movie?.release_date
-            ? new Date(movie.release_date).getFullYear()
-            : '';
-        return {
-          title: `${movie?.title} (${year})`,
-          route: {name: 'movie', params: {id: movie?.id}}
-        }
-      })
-
-      if (!searchItems.length && !isLoading.value) {
-        return [{
-          title: `No search results for ${search.value}`
-        }]
+    if (!search.value || !searchResults.value.length) return [];
+    const searchItems = searchResults.value.map(movie => {
+      const year = movie?.release_date
+        ? new Date(movie.release_date).getFullYear()
+        : '';
+      return {
+        title: `${movie?.title} (${year})`,
+        route: {name: 'movie', params: {id: movie?.id}}
       }
-      return searchItems;
+    })
+
+    if (!searchItems.length && !isLoading.value) {
+      return [{
+        title: `No search results for ${search.value}`
+      }]
     }
+    return searchItems;
+  }
 )
+
+onMounted(() => {
+  document.addEventListener('click', manageSearchResultsVisibility)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', manageSearchResultsVisibility)
+})
+
+const showSearchResults = ref(false);
+const searchWrapperRef = useTemplateRef('searchWrapperRef');
+
+function manageSearchResultsVisibility(event) {
+  if (searchWrapperRef.value && !searchWrapperRef.value.contains(event.target)) {
+    showSearchResults.value = false
+  }
+}
 
 </script>
 
 <template>
-  <div class="position-relative w-100">
+  <div ref="searchWrapperRef" class="position-relative w-100">
     <v-text-field
-        v-model="search"
-        density="compact"
-        placeholder="Search..."
+      v-model="search"
+      density="compact"
+      placeholder="Search..."
+      @focus="showSearchResults = true"
     ></v-text-field>
     <v-list
-        v-if="searchItems.length"
-        :lines="false"
-        class="position-absolute list-search"
-        density="compact"
-        nav
+      v-if="searchItems.length && showSearchResults"
+      :lines="false"
+      class="position-absolute list-search"
+      density="compact"
+      nav
     >
       <v-list-item
-          v-for="(item, i) in searchItems"
-          :key="i"
-          :border="1"
-          :to="item.route"
-          :value="item"
-          border="black"
-          color="primary"
-          @click="search = ''"
+        v-for="(item, i) in searchItems"
+        :key="i"
+        :border="1"
+        :to="item.route"
+        :value="item"
+        border="black"
+        color="primary"
+        @click="search = ''"
       >
         <v-list-item-title class="ml-2" v-text="item.title"></v-list-item-title>
       </v-list-item>

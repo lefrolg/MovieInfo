@@ -33,12 +33,13 @@ function observerCallback(entries) {
 </script>
 
 <template>
+  <h1 class="mb-3">Popular Movies</h1>
   <v-row v-if="popularMovies.length">
     <v-col v-for="movie of popularMovies" :key="movie?.id" cols="3">
       <movie-card
           :id="movie?.id"
           :poster-url="movie?.poster_path || ''"
-          :rating="movie?.vote_average || ''"
+          :rating="movie?.vote_average || 0"
           :release-date="movie?.release_date || ''"
           :title="movie?.title || ''"
       />

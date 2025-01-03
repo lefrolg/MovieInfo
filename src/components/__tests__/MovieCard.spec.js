@@ -4,10 +4,12 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import MovieCard from '../MovieCard.vue'
 import router from "../../router/index.js";
+import { describe, it, expect } from 'vitest'
+import ResizeObserver from 'resize-observer-polyfill'
 
 const vuetify = createVuetify({ components, directives })
 
-global.ResizeObserver = require('resize-observer-polyfill')
+window.ResizeObserver = ResizeObserver
 
 const imagePath = 'https://media.themoviedb.org/t/p/w220_and_h330_face/'
 
@@ -18,14 +20,14 @@ const props = {
   rating: 8,
   id: 1234,
 }
-
 describe('MovieCard', async () => {
 
   const wrapper = mount(MovieCard, {
     props,
     global: {
       plugins: [vuetify, router],
-      provide: { 'vite-plugin-env': { import: { meta: { env: { VITE_TMDB_IMAGE_URL: imagePath } } } } },
+      provide: {
+        'vite-plugin-env': { import: { meta: { env: { VITE_TMDB_IMAGE_URL: imagePath } } } } },
     },
   })
 

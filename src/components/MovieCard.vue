@@ -35,31 +35,31 @@ const date = computed(() => {
 </script>
 <template>
   <v-card
+    :to="{name: 'movie', params: {id}}"
     class="mx-auto"
-    rounded="large"
     color="blue-grey-lighten-5"
-    height="100%"
     elevation="6"
+    height="100%"
+    link
+    rounded="large"
   >
-    <router-link :to="{name: 'movie', params: {id}}">
-      <v-img
-        :src="imagePath + posterUrl"
-        class="align-end text-white"
-        cover
-        height="400"
-      >
-        <template v-slot:placeholder>
-          <div class="d-flex align-center justify-center fill-height">
-            <v-progress-circular
-              color="grey-lighten-4"
-              indeterminate
-            ></v-progress-circular>
-          </div>
-        </template>
-      </v-img>
-    </router-link>
+    <v-img
+      :src="imagePath + posterUrl"
+      class="align-end text-white"
+      cover
+      height="400"
+    >
+      <template v-slot:placeholder>
+        <div class="d-flex align-center justify-center fill-height">
+          <v-progress-circular
+            color="grey-lighten-4"
+            indeterminate
+          ></v-progress-circular>
+        </div>
+      </template>
+    </v-img>
     <v-card-title class="pt-4">{{ title }}</v-card-title>
-    <v-card-text >
+    <v-card-text>
       <div class="mb-1">{{ date }}</div>
       <div v-if="rating" class="d-flex align-center justify-space-between ga-2">
         <v-rating
@@ -72,9 +72,6 @@ const date = computed(() => {
         <div class="rating-number">
           {{ rating }}
         </div>
-      </div>
-      <div class="mt-2">
-        <v-btn @click="$router.push({name: 'movie', params: {id}})" class="px-0" color="orange" text="Explore" variant="text"></v-btn>
       </div>
     </v-card-text>
   </v-card>

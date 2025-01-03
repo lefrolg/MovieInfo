@@ -13,7 +13,6 @@ const {movie, similarMovies, movieYear, genres, countries, isLoading} = storeToR
 const movieId = computed(() => route.params.id)
 
 watch(movieId, async () => {
-  store.emptyMovie()
   return await setMovieData()
 })
 
@@ -29,7 +28,6 @@ async function setMovieData() {
 }
 
 const imagePath = import.meta.env.VITE_TMDB_IMAGE_URL_BIG;
-
 
 </script>
 

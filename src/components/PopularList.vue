@@ -1,6 +1,6 @@
 <script setup>
 
-import {onMounted, useTemplateRef} from "vue";
+import {onMounted, onUnmounted, useTemplateRef} from "vue";
 import MovieCard from "@/components/MovieCard.vue";
 import {usePopularMoviesStore} from "@/stores/moviesStore.js";
 import {storeToRefs} from "pinia";
@@ -16,7 +16,11 @@ const options = {
 const observer = new IntersectionObserver(observerCallback, options);
 
 onMounted(() => {
-  observer.observe(loadMoreTrigger.value);
+   observer.observe(loadMoreTrigger.value);
+})
+
+onUnmounted(()=> {
+  if (observer) observer.disconnect()
 })
 
 function observerCallback(entries) {

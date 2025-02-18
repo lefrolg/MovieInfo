@@ -27,8 +27,14 @@ export function getMovieById(id) {
 export function getSimilarMovies(id, page) {
   return apiClient.get(`/movie/${id}/similar?language=en-US&page=${page}`)
 }
+
+/**
+ * Get movies by query search
+ * @param query
+ * @param page
+ * @returns {Promise<axios.AxiosResponse<any>>}
+ */
 export function getMoviesByQuery(query, page  = 1) {
   const searchParameters = new URLSearchParams({query, page})
   return apiClient.get(`/search/movie?${searchParameters.toString()}`)
-
 }

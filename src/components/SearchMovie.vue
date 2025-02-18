@@ -10,7 +10,7 @@ const search = defineModel();
 
 watch(search, async () => {
   showSearchResults.value = true;
-  await store.fetchSearchMovies(search.value)
+  await store.fetchSearchMovies(encodeURIComponent(search.value))
 })
 
 const searchItems = computed(() => {

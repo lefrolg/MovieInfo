@@ -1,14 +1,24 @@
 # MovieInfo
 
-This template should help get you started developing with Vue 3 in Vite.
+This repository demonstrates an example of Vue code, reflecting my approach to development, architectural organization, and code quality.
 
-## Recommended IDE Setup
+The project is a movie listing website that displays popular films along with their ratings and release dates.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+[Live web-site](https://lefrolg.github.io/MovieInfo/)
 
-## Customize configuration
+## Features
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+* Integrated interaction with a REST API for fetching movie data
+* State management implemented using Pinia
+* Search input functionality
+* Unit test for the movie card component
+* Lazy loading of movie cards using IntersectionObserver
+* Custom UI implementation without a provided design
+
+## Tech Stack
+
+Vue 3, Vue Router, Pinia, Vuetify, Vitest, Axios
+
 
 ## Project Setup
 
